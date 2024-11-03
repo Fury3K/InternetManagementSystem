@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+</head>
+<body>
+    <h1>Customer Details</h1>
+    <p><strong>ID:</strong> {{ customer.customerID }}</p>
+    <p><strong>Username:</strong> {{ customer.username }}</p>
+    <p><strong>Full Name:</strong> {{ customer.firstName }} {{ customer.middleName }} {{ customer.lastName }}</p>
+    <p><strong>Address:</strong> {{ customer.address }}</p>
+    <p><strong>Contact Number:</strong> {{ customer.contactNumber }}</p>
+    <p><strong>Email:</strong> {{ customer.email }}</p>
+    
+    <a href="{% url 'customer-update' customer.customerID %}">Edit</a>
+    <a href="{% url 'customer-list' %}">Back to Customer List</a>
+</body>
+</html>
