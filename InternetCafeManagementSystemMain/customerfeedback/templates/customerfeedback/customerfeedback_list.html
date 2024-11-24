@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback List</title>
+</head>
+<body>
+    <header>
+        <h1>Customer Feedbacks</h1>
+    </header>
+    <main>
+        <a href="{% url 'feedback_create' %}">Create New Feedback</a>
+        <ul>
+            {% for feedback in feedbacks %}
+                <li>
+                    <strong>{{ feedback.customerFeedback }}</strong> - 
+                    <a href="{% url 'feedback_detail' feedback.pk %}">View</a> | 
+                    <a href="{% url 'feedback_update' feedback.pk %}">Edit</a> | 
+                    <a href="{% url 'feedback_delete' feedback.pk %}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<h1>Session List</h1>
+<a href="{% url 'session_create' %}">Create New Session</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Cost</th>
+        <th>Actions</th>
+    </tr>
+    {% for session in sessions %}
+    <tr>
+        <td>{{ session.sessionID }}</td>
+        <td>{{ session.startTime }}</td>
+        <td>{{ session.endTime }}</td>
+        <td>{{ session.cost }}</td>
+        <td>
+            <a href="{% url 'session_detail' session.sessionID %}">View</a>
+            <a href="{% url 'session_update' session.sessionID %}">Edit</a>
+            <form action="{% url 'session_delete' session.sessionID %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,31 @@
+<h1>Computer Units</h1>
+<a href="{% url 'computerunit_create' %}">Create New Computer Unit</a>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Availability</th>
+        <th>Admin</th>
+        <th>Actions</th>
+    </tr>
+    {% for computer_unit in computer_units %}
+    <tr>
+        <td>{{ computer_unit.computerID }}</td>
+        <td>
+            {% if computer_unit.availability %}
+                Available
+            {% else %}
+                Unavailable
+            {% endif %}
+        </td>
+        <td>{{ computer_unit.adminID.username }}</td>
+        <td>
+            <a href="{% url 'computerunit_detail' computer_unit.computerID %}">View</a>
+            <a href="{% url 'computerunit_update' computer_unit.computerID %}">Edit</a>
+            <form action="{% url 'computerunit_delete' computer_unit.computerID %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

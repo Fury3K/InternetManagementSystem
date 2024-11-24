@@ -2,40 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer List</title>
 </head>
 <body>
     <h1>Customer List</h1>
-    <a href="{% url 'customer-create' %}">Create New Customer</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for customer in customers %}
-                <tr>
-                    <td>{{ customer.customerID }}</td>
-                    <td>{{ customer.username }}</td>
-                    <td>{{ customer.firstName }} {{ customer.middleName }} {{ customer.lastName }}</td>
-                    <td>{{ customer.email }}</td>
-                    <td>
-                        <a href="{% url 'customer-detail' customer.customerID %}">View</a>
-                        <a href="{% url 'customer-update' customer.customerID %}">Edit</a>
-                        <form action="{% url 'customer-delete' customer.customerID %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <a href="{% url 'customer_create' %}">Create New Customer</a>
+    <ul>
+        {% for customer in customers %}
+            <li>
+                <a href="{% url 'customer_detail' customer.pk %}">{{ customer.firstName }} {{ customer.lastName }}</a> |
+                <a href="{% url 'customer_update' customer.pk %}">Edit</a> |
+                <a href="{% url 'customer_delete' customer.pk %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

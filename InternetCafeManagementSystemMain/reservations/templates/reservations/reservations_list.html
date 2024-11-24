@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations List</title>
+</head>
+<body>
+    <header>
+        <h1>Reservations</h1>
+    </header>
+    <main>
+        <a href="{% url 'reservations_create' %}">Create New Reservation</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.reservationID }}</td>
+                    <td>{{ reservation.time }}</td>
+                    <td>{{ reservation.date }}</td>
+                    <td>{{ reservation.status }}</td>
+                    <td>
+                        <a href="{% url 'reservations_detail' reservation.pk %}">View</a> |
+                        <a href="{% url 'reservations_update' reservation.pk %}">Edit</a> |
+                        <a href="{% url 'reservations_delete' reservation.pk %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<h1>Create Computer Unit</h1>
+<form method="POST" action="{% url 'computerunit_create' %}">
+    {% csrf_token %}
+    <label>Availability:</label>
+    <input type="checkbox" name="availability">
+    <br>
+    <label>Admin:</label>
+    <select name="adminID" required>
+        <option value="">Select Admin</option>
+        {% for admin in admins %}
+            <option value="{{ admin.adminID }}">{{ admin.username }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <button type="submit">Create</button>
+</form>
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+<a href="{% url 'computerunit_list' %}">Back to List</a>

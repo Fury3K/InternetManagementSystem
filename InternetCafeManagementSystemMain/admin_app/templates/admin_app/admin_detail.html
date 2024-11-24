@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Details</title>
+</head>
+<body>
+    <h1>Admin Details</h1>
+    <p><strong>ID:</strong> {{ admin.adminID }}</p>
+    <p><strong>Username:</strong> {{ admin.username }}</p>
+    <a href="{% url 'admin_update' admin.adminID %}">Edit</a>
+    <a href="{% url 'admin_list' %}">Back to Admin List</a>
+</body>
+</html>

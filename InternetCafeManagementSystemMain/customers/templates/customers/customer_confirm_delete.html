@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Delete</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete this customer?</h1>
+    <p>{{ customer.firstName }} {{ customer.lastName }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm Delete</button>
+    </form>
+    <a href="{% url 'customer_list' %}">Cancel</a>
+</body>
+</html>

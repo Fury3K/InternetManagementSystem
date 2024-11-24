@@ -1,0 +1,61 @@
+<h1>Update Session</h1>
+<form method="POST" action="{% url 'session_update' session.sessionID %}">
+    {% csrf_token %}
+    
+    <label>Start Time:</label>
+    <input type="datetime-local" name="startTime" value="{{ session.startTime|date:'Y-m-d\\TH:i' }}">
+    
+    <label>End Time:</label>
+    <input type="datetime-local" name="endTime" value="{{ session.endTime|date:'Y-m-d\\TH:i' }}">
+    
+    <label>Cost:</label>
+    <input type="number" step="0.01" name="cost" value="{{ session.cost }}">
+
+    <label>Customer:</label>
+    <select name="customerID" required>
+        {% for customer in customers %}
+            <option value="{{ customer.customerID }}" {% if session.customerID.customerID == customer.customerID %}selected{% endif %}>
+                {{ customer.customerID }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label>Reservation:</label>
+    <select name="reservationID" required>
+        {% for reservation in reservations %}
+            <option value="{{ reservation.reservationID }}" {% if session.reservationID.reservationID == reservation.reservationID %}selected{% endif %}>
+                {{ reservation.reservationID }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label>Computer:</label>
+    <select name="computerID" required>
+        {% for computer in computers %}
+            <option value="{{ computer.computerID }}" {% if session.computerID.computerID == computer.computerID %}selected{% endif %}>
+                {{ computer.computerID }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label>Admin:</label>
+    <select name="adminID" required>
+        {% for admin in admins %}
+            <option value="{{ admin.adminID }}" {% if session.adminID.adminID == admin.adminID %}selected{% endif %}>
+                {{ admin.adminID }}
+            </option>
+        {% endfor %}
+    </select>
+
+    {% if errors %}
+        <ul>
+            {% for field, error_list in errors.items %}
+                <li>{{ field }}: {{ error_list }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <button type="submit">Update</button>
+</form>
+
+<a href="{% url 'session_list' %}">Back to Session List</a>

@@ -1,0 +1,7 @@
+<h1>Session Details</h1>
+<p><strong>Session ID:</strong> {{ session.sessionID }}</p>
+<p><strong>Start Time:</strong> {{ session.startTime }}</p>
+<p><strong>End Time:</strong> {{ session.endTime }}</p>
+<p><strong>Cost:</strong> {{ session.cost }}</p>
+<a href="{% url 'session_update' session.sessionID %}">Edit</a>
+<a href="{% url 'session_list' %}">Back to Session List</a>
