@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Unit Details</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            background-color: #d32f2f;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .link-container {
+            display: flex;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Computer Unit Details</h1>
+
+<p><strong>ID:</strong> {{ computer_unit.computerID }}</p>
+
+<p><strong>Availability:</strong> 
+    {% if computer_unit.availability %}
+        Available
+    {% else %}
+        Unavailable
+    {% endif %}
+</p>
+
+<p><strong>Admin:</strong> {{ computer_unit.adminID.username }}</p>
+
+<div class="link-container">
+    <a href="{% url 'computerunit_update' computer_unit.computerID %}">Edit</a>
+    <a href="{% url 'computerunit_list' %}">Back to List</a>
+</div>
+
+</body>
+</html>

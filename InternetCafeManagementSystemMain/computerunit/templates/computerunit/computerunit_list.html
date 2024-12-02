@@ -1,31 +1,114 @@
-<h1>Computer Units</h1>
-<a href="{% url 'computerunit_create' %}">Create New Computer Unit</a>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Availability</th>
-        <th>Admin</th>
-        <th>Actions</th>
-    </tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Computers</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .computer-card {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .computer-card:hover {
+            transform: scale(1.05);
+        }
+
+        .computer-card img {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .computer-card p {
+            margin: 5px 0;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        a.create-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #d32f2f;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        a.back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<a href="{% url 'computerunit_create' %}" class="create-button">Create New Computer Unit</a>
+
+<h1>Available Computers</h1>
+
+<a href="{% url 'computerunit_list' %}" class="back-button">← Back</a>
+
+<div class="grid-container">
     {% for computer_unit in computer_units %}
-    <tr>
-        <td>{{ computer_unit.computerID }}</td>
-        <td>
-            {% if computer_unit.availability %}
-                Available
-            {% else %}
-                Unavailable
-            {% endif %}
-        </td>
-        <td>{{ computer_unit.adminID.username }}</td>
-        <td>
-            <a href="{% url 'computerunit_detail' computer_unit.computerID %}">View</a>
-            <a href="{% url 'computerunit_update' computer_unit.computerID %}">Edit</a>
-            <form action="{% url 'computerunit_delete' computer_unit.computerID %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
+    <div class="computer-card">
+        {% if computer_unit.availability %}
+            <img src="{% static 'images/Available.png' %}" alt="Computer Status">
+        {% else %}
+            <img src="{% static 'images/Unavailable.png' %}" alt="Computer Status">
+        {% endif %}
+        <p><strong>{{ computer_unit.computerID }}</strong></p>
+        <p>Status: {% if computer_unit.availability %}Available{% else %}Unavailable{% endif %}</p>
+        <p>Admin: {{ computer_unit.adminID.username }}</p>
+        <a href="{% url 'computerunit_detail' computer_unit.computerID %}">View Details</a>
+        <a href="{% url 'computerunit_update' computer_unit.computerID %}">Edit</a>
+        <form action="{% url 'computerunit_delete' computer_unit.computerID %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="background: none; color: red; border: none; cursor: pointer;">Delete</button>
+        </form>
+    </div>
     {% endfor %}
-</table>
+</div>
+
+</body>
+</html>

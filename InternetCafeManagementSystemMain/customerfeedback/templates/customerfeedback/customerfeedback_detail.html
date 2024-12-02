@@ -1,19 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Detail</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .logo {
+            max-width: 100px;
+            height: auto;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        a {
+            background-color: #d32f2f;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        a.back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Feedback Detail</h1>
-    </header>
-    <main>
-        <p><strong>Feedback:</strong> {{ feedback.customerFeedback }}</p>
-        <p><strong>Customer:</strong> {{ feedback.customerID }}</p>
-        <p><strong>Admin:</strong> {{ feedback.adminID }}</p>
-        <a href="{% url 'feedback_list' %}">Back to List</a>
-    </main>
+
+<a href="{% url 'feedback_list' %}" class="back-button">← Back</a>
+
+<header>
+    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+    <h1>Feedback Detail</h1>
+</header>
+
+<div class="container">
+    <p><strong>Feedback:</strong> {{ feedback.customerFeedback }}</p>
+    <p><strong>Customer:</strong> {{ feedback.customerID }}</p>
+    <p><strong>Admin:</strong> {{ feedback.adminID }}</p>
+    <a href="{% url 'feedback_list' %}">Back to List</a>
+</div>
+
 </body>
 </html>
