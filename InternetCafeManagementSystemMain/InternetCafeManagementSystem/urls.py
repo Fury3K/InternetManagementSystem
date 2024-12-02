@@ -20,7 +20,7 @@ from django.urls import path, include
 from sessionsdata.views import (
     SessionDataCreateView, SessionDataDetailView, 
     SessionDataUpdateView, SessionDataDeleteView, 
-    SessionDataListView
+    SessionDataListView, StartSessionView
 )
 from customers.views import (
     CustomerCreateView, CustomerDetailView, 
@@ -64,6 +64,7 @@ urlpatterns = [
     path('sessions/<int:pk>/', SessionDataDetailView.as_view(), name='session_detail'),
     path('sessions/<int:pk>/update/', SessionDataUpdateView.as_view(), name='session_update'),
     path('sessions/<int:pk>/delete/', SessionDataDeleteView.as_view(), name='session_delete'),
+     path('sessions/start/', StartSessionView.as_view(), name='start_session'),
 
     # URLs for customers app
     path('customers/', CustomerListView.as_view(), name='customer_list'),

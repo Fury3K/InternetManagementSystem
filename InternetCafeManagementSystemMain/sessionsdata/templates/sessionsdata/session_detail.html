@@ -1,7 +1,125 @@
-<h1>Session Details</h1>
-<p><strong>Session ID:</strong> {{ session.sessionID }}</p>
-<p><strong>Start Time:</strong> {{ session.startTime }}</p>
-<p><strong>End Time:</strong> {{ session.endTime }}</p>
-<p><strong>Cost:</strong> {{ session.cost }}</p>
-<a href="{% url 'session_update' session.sessionID %}">Edit</a>
-<a href="{% url 'session_list' %}">Back to Session List</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Details</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .logo {
+            max-width: 100px;
+            height: auto;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+
+        .content {
+            width: 60%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .session-details {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .session-details p {
+            margin: 10px 0;
+        }
+
+        a, button {
+            background-color: #d32f2f;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .image-section {
+            width: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-section img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a.back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<a href="{% url 'session_list' %}" class="back-button">← Back</a>
+
+<header>
+    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+</header>
+
+<div class="container">
+    <!-- Left Content (Session Details) -->
+    <div class="content">
+        <h1>Session Details</h1>
+        <div class="session-details">
+            <p><strong>Session ID:</strong> {{ session.sessionID }}</p>
+            <p><strong>Start Time:</strong> {{ session.startTime }}</p>
+            <p><strong>End Time:</strong> {{ session.endTime }}</p>
+            <p><strong>Cost:</strong> {{ session.cost }}</p>
+        </div>
+        <a href="{% url 'session_update' session.sessionID %}">Edit</a>
+    </div>
+
+    <!-- Right Content (Spartan Image) -->
+    <div class="image-section">
+        <img src="{% static 'images/spartan.png' %}" alt="Spartan Image">
+    </div>
+</div>
+
+</body>
+</html>

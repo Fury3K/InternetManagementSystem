@@ -1,50 +1,186 @@
-<h1>Create New Session</h1>
-<form method="POST" action="{% url 'session_create' %}">
-    {% csrf_token %}
-    <label>Start Time:</label>
-    <input type="datetime-local" name="startTime">
-    <label>End Time:</label>
-    <input type="datetime-local" name="endTime">
-    <label>Cost:</label>
-    <input type="number" step="0.01" name="cost">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Session</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(0, 0, 0, 0.8); /* Apply the background color to the body */
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    <label>Customer:</label>
-    <select name="customerID" required>
-        {% for customer in customers %}
-            <option value="{{ customer.customerID }}">{{ customer.customerID }}</option>
-        {% endfor %}
-    </select>
+        img.logo {
+            position: absolute;
+            top: 20px;
+            max-width: 150px;
+            height: auto;
+        }
 
-    <label>Reservation:</label>
-    <select name="reservationID" required>
-        {% for reservation in reservations %}
-            <option value="{{ reservation.reservationID }}">{{ reservation.reservationID }}</option>
-        {% endfor %}
-    </select>
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            background-color: #d32f2f;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
 
-    <label>Computer:</label>
-    <select name="computerID" required>
-        {% for computer in computers %}
-            <option value="{{ computer.computerID }}">{{ computer.computerID }}</option>
-        {% endfor %}
-    </select>
+        .container {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;
+        }
 
-    <label>Admin:</label>
-    <select name="adminID" required>
-        {% for admin in admins %}
-            <option value="{{ admin.adminID }}">{{ admin.adminID }}</option>
-        {% endfor %}
-    </select>
+        .form-section {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.8); /* Ensure the form section has the same background */
+        }
 
-    {% if errors %}
-        <ul>
-            {% for field, error_list in errors.items %}
-                <li>{{ field }}: {{ error_list }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    
-    <button type="submit">Create</button>
-</form>
+        .form-section h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-<a href="{% url 'session_list' %}">Back to Session List</a>
+        .form-section form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            align-items: center;
+        }
+
+        .form-section form label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-section form input,
+        .form-section form select {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background: #e0e0e0;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .form-section button {
+            grid-column: span 2;
+            padding: 12px;
+            border: none;
+            background: #d32f2f;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            justify-self: center;
+            width: 50%;
+        }
+
+        .image-section {
+            flex: 1;
+            background: url("{% static 'images/spartan.png' %}") no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            color: white;
+            padding: 20px;
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.8); /* Background color for the image section */
+        }
+
+        .image-section h2 {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Logo placed directly on the page -->
+<img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+
+<a href="{% url 'session_list' %}" class="back-button">← Back</a>
+
+<div class="container">
+    <div class="form-section">
+        
+        <h1>Create New Session</h1>
+        <p>Fill up the form to create and begin your new session.</p>
+        <form method="POST" action="{% url 'session_create' %}">
+            {% csrf_token %}
+            
+            <label>Start Time:</label>
+            <input type="datetime-local" name="startTime" required>
+
+            <label>End Time:</label>
+            <input type="datetime-local" name="endTime" required>
+
+            <label>Cost:</label>
+            <input type="number" step="0.01" name="cost" placeholder="Enter Cost" required>
+
+            <label>Customer:</label>
+            <select name="customerID" required>
+                {% for customer in customers %}
+                    <option value="{{ customer.customerID }}">{{ customer.customerID }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Reservation:</label>
+            <select name="reservationID" required>
+                {% for reservation in reservations %}
+                    <option value="{{ reservation.reservationID }}">{{ reservation.reservationID }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Computer:</label>
+            <select name="computerID" required>
+                {% for computer in computers %}
+                    <option value="{{ computer.computerID }}">{{ computer.computerID }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Admin:</label>
+            <select name="adminID" required>
+                {% for admin in admins %}
+                    <option value="{{ admin.adminID }}">{{ admin.adminID }}</option>
+                {% endfor %}
+            </select>
+
+            {% if errors %}
+                <ul>
+                    {% for field, error_list in errors.items %}
+                        <li>{{ field }}: {{ error_list }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            
+            <button type="submit">Create Session</button>
+        </form>
+    </div>
+    <div class="image-section">
+        <h2>Start Session</h2>
+    </div>
+</div>
+
+</body>
+</html>
