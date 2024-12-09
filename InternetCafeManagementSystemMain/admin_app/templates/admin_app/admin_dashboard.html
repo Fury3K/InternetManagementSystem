@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .dashboard-header img {
+            width: 80px;
+            margin-top: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .computer-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .computer-card img {
+            width: 50px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .computer-card p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .computer-card.status-occupied {
+            border: 2px solid #d32f2f;
+        }
+
+        .computer-card.status-available {
+            border: 2px solid #43a047;
+        }
+
+        .computer-card:hover {
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .action-buttons a {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background-color: #d32f2f;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .action-buttons a:hover {
+            background-color: #b71c1c;
+        }
+
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+        <h1>Admin Dashboard</h1>
+        <a href="{% url 'admin_login' %}" class="logout-button">Log Out</a>
+    </div>
+
+    <div class="grid-container">
+        {% for computer_unit in computer_units %}
+        <div class="computer-card status-{% if computer_unit.availability %}available{% else %}occupied{% endif %}">
+            <img src="{% static 'images/computer.png' %}" alt="Computer">
+            <p><strong>PC {{ computer_unit.computerID }}</strong></p>
+            <p>Status: {% if computer_unit.availability %}Available{% else %}Occupied{% endif %}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="action-buttons">
+        <a href="{% url 'reservations_list' %}">View Reservations</a>
+        <a href="{% url 'session_list' %}">View Sessions</a>
+        <a href="{% url 'computerunit_list' %}">View Computers</a>
+        <a href="{% url 'admin_list' %}">View Admins</a>
+        <a href="{% url 'customer_list' %}">View Customers</a>
+    </div>
+</body>
+</html>

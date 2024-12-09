@@ -3,6 +3,11 @@ from django.views import View
 from .models import ComputerUnit
 from admin_app.models import Admin  # Assuming Admin is in admin_app
 
+class CustomerComputerUnitListView(View):
+    def get(self, request):
+        computer_units = ComputerUnit.objects.all()
+        return render(request, 'computerunit/computerunit_forcustomers.html', {'computer_units': computer_units})
+
 # List all ComputerUnits
 class ComputerUnitListView(View):
     def get(self, request):

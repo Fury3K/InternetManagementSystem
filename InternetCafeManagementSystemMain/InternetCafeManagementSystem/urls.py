@@ -17,6 +17,8 @@ Including another URLconf
 # urls.py for InternetCafeManagementSystem project
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
+
 from sessionsdata.views import (
     SessionDataCreateView, SessionDataDetailView, 
     SessionDataUpdateView, SessionDataDeleteView, 
@@ -25,18 +27,20 @@ from sessionsdata.views import (
 from customers.views import (
     CustomerCreateView, CustomerDetailView, 
     CustomerUpdateView, CustomerDeleteView, 
-    CustomerListView
+    CustomerListView, customer_login,
+    customer_dashboard, customer_register
 )
 from admin_app.views import (
     AdminListView, AdminCreateView, 
     AdminDetailView, AdminUpdateView, 
-    AdminDeleteView
+    AdminDeleteView, AdminLoginView,
+    admin_dashboard,
 )
 
 from computerunit.views import (
     ComputerUnitListView, ComputerUnitCreateView,
     ComputerUnitDetailView, ComputerUnitUpdateView,
-    ComputerUnitDeleteView
+    ComputerUnitDeleteView, CustomerComputerUnitListView,
 )
 
 from reservations.views import (
@@ -56,6 +60,12 @@ from customerfeedback.views import (
 )
 
 urlpatterns = [
+    path('', lambda request: redirect('customer_login')), 
+    path('login/', customer_login, name='customer_login'),
+    path('dashboard/', customer_dashboard, name='customer_dashboard'),
+    path('admin_app/login/', AdminLoginView.as_view(), name='admin_login'),
+    path('admin_dashboard/', admin_dashboard, name='admin_dashboard'),
+    
     path('admin/', admin.site.urls),  # Django's built-in admin site
 
     # URLs for sessions data app
@@ -64,7 +74,7 @@ urlpatterns = [
     path('sessions/<int:pk>/', SessionDataDetailView.as_view(), name='session_detail'),
     path('sessions/<int:pk>/update/', SessionDataUpdateView.as_view(), name='session_update'),
     path('sessions/<int:pk>/delete/', SessionDataDeleteView.as_view(), name='session_delete'),
-     path('sessions/start/', StartSessionView.as_view(), name='start_session'),
+    path('sessions/start/', StartSessionView.as_view(), name='start_session'),
 
     # URLs for customers app
     path('customers/', CustomerListView.as_view(), name='customer_list'),
@@ -72,6 +82,8 @@ urlpatterns = [
     path('customers/<int:pk>/', CustomerDetailView.as_view(), name='customer_detail'),
     path('customers/<int:pk>/update/', CustomerUpdateView.as_view(), name='customer_update'),
     path('customers/<int:pk>/delete/', CustomerDeleteView.as_view(), name='customer_delete'),
+    path('login/', customer_login, name='customer_login'),
+    path('register/', customer_register, name='customer_register'),
 
     # URLs for admin management app
     path('admin_app/', AdminListView.as_view(), name='admin_list'),
@@ -83,6 +95,7 @@ urlpatterns = [
     # URLs for computerunit app
     path('computerunit', ComputerUnitListView.as_view(), name='computerunit_list'),
     path('computerunit/create/', ComputerUnitCreateView.as_view(), name='computerunit_create'),
+     path('computerunit/forcustomers/', CustomerComputerUnitListView.as_view(), name='customer_computerunit_list'),
     path('computerunit/<int:pk>/', ComputerUnitDetailView.as_view(), name='computerunit_detail'),
     path('computerunit/<int:pk>/update/', ComputerUnitUpdateView.as_view(), name='computerunit_update'),
     path('computerunit/<int:pk>/delete/', ComputerUnitDeleteView.as_view(), name='computerunit_delete'),

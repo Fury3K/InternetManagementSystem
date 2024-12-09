@@ -54,24 +54,6 @@
             margin: 5px 0;
         }
 
-        a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        a.create-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #d32f2f;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
         .back-button {
             color: white;
             text-decoration: none;
@@ -84,8 +66,6 @@
 </head>
 <body>
 
-<a href="{% url 'computerunit_create' %}" class="create-button">Create New Computer Unit</a>
-
 <h1>Available Computers</h1>
 
 <!-- Updated Back button to return to the previous page -->
@@ -95,19 +75,12 @@
     {% for computer_unit in computer_units %}
     <div class="computer-card">
         {% if computer_unit.availability %}
-            <img src="{% static 'images/Available.png' %}" alt="Computer Status">
+            <img src="{% static 'images/Available.png' %}" alt="Available">
         {% else %}
-            <img src="{% static 'images/Unavailable.png' %}" alt="Computer Status">
+            <img src="{% static 'images/Unavailable.png' %}" alt="Unavailable">
         {% endif %}
         <p><strong>{{ computer_unit.computerID }}</strong></p>
         <p>Status: {% if computer_unit.availability %}Available{% else %}Unavailable{% endif %}</p>
-        <p>Admin: {{ computer_unit.adminID.username }}</p>
-        <a href="{% url 'computerunit_detail' computer_unit.computerID %}">View Details</a>
-        <a href="{% url 'computerunit_update' computer_unit.computerID %}">Edit</a>
-        <form action="{% url 'computerunit_delete' computer_unit.computerID %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" style="background: none; color: red; border: none; cursor: pointer;">Delete</button>
-        </form>
     </div>
     {% endfor %}
 </div>
