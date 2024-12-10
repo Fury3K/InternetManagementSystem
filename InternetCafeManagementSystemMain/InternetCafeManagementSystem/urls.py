@@ -48,7 +48,8 @@ from reservations.views import (
     ReservationsCreateView,
     ReservationsDetailView,
     ReservationsUpdateView,
-    ReservationsDeleteView
+    ReservationsDeleteView,
+    ReservationsCustomerCreateView,
 )
 
 from customerfeedback.views import (
@@ -106,6 +107,7 @@ urlpatterns = [
     path('reservations/<int:pk>/', ReservationsDetailView.as_view(), name='reservations_detail'),
     path('reservations/<int:pk>/update/', ReservationsUpdateView.as_view(), name='reservations_update'),
     path('reservations/<int:pk>/delete/', ReservationsDeleteView.as_view(), name='reservations_delete'),
+    path('reservations/create-customer/', ReservationsCustomerCreateView.as_view(), name='reservations_create_customer'),
 
     # URLs for customer feedback
     path('customerfeedback', CustomerFeedbackListView.as_view(), name='feedback_list'),

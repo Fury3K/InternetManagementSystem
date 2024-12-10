@@ -1,4 +1,5 @@
 from django.urls import reverse_lazy
+from django import forms
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import CustomerFeedback
 
@@ -13,6 +14,11 @@ class CustomerFeedbackCreateView(CreateView):
     template_name = 'customerfeedback/customerfeedback_create.html'
     fields = ['customerFeedback', 'customerID', 'adminID']
     success_url = reverse_lazy('feedback_list')
+
+    def get_form(self):
+        form = super().get_form()
+        form.fields['customerFeedback'].widget = forms.Textarea(attrs={'cols': 80, 'rows': 10})
+        return form
 
 
 class CustomerFeedbackDetailView(DetailView):
